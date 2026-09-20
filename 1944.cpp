@@ -3,58 +3,57 @@ using namespace std;
 
 int main()
 {
-    char caractere;
-    stack<char> pilha1;
-    stack<char> pilha2;
-    int soma = 0;
-
     int n;
     cin >> n;
+    char valor;
 
-    for (int i = 1; i <= n; i++)
+    stack<char> pilha;
+    vector<char> pilhaaux;
+    int z = 1;
+    int cont = 0;
+
+    pilha.push('F');
+    pilha.push('A');
+    pilha.push('C');
+    pilha.push('E');
+
+    for (int i = 0; i < n; i++)
     {
-        int z = 0;
         int controle = 1;
 
         for (int j = 0; j < 4; j++)
         {
-            cin >> caractere;
+            cin >> valor;
 
-            if (i % 2 != 0)
+            if (valor == pilha.top() && z == 1)
             {
-                if (i > 1)
-                {
-                    if (pilha2.top() != caractere)
-                    {
-                        controle = 0;
-                    }
-
-                    pilha2.pop();
-                }
-
-                pilha1.push(caractere);
+                pilhaaux.push_back(valor);
+                pilha.pop();
             }
-            else
+            else if (valor == pilha.top())
             {
-                if (pilha1.top() != caractere)
-                {
-                    controle = 0;
-                }
-
-                pilha1.pop();
-                pilha2.push(caractere);
+                controle = 0;
             }
-
-            printf("%d\n", soma);
         }
 
         if (controle == 1)
         {
-            soma++;
+            z = 0;
+            cont++;
+        }
+        else
+        {
+            int v = pilhaaux.size();
+            v--;
+
+            for (int j = v; j >= 0; j--)
+            {
+                pilha.push(pilhaaux[j]);
+            }
         }
     }
 
-    cout << soma << endl;
+    cout << cont << endl;
 
     return 0;
 }
