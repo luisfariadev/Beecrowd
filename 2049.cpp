@@ -1,30 +1,37 @@
-#include <stdio.h>
-#include <string.h>
-#define max 1000005
-#define max2 300005
+#include <bits/stdc++.h>
+using namespace std;
 
 int main()
 {
-    char buscada[max];
-    char busca[max2];
-    int cont = 1;
+    string a;
+    string b;
+    int teste = 1;
 
-    while (scanf("%s", buscada) && buscada != "0")
+    while (getline(cin, a))
     {
-        printf("Instancia: %d\n", cont);
-        cont++;
-        scanf("%s", busca);
-
-        if (strstr(busca, buscada) != NULL)
+        if (a == "0")
         {
-            printf("Verdadeira\n");
+            break;
+        }
+
+        getline(cin, b);
+
+        if (teste > 1)
+        {
+            cout << endl;
+        }
+
+        cout << "Instancia " << teste << endl;
+        teste++;
+
+        if (b.find(a) != string::npos)
+        {
+            cout << "verdadeira" << endl;
         }
         else
         {
-            printf("Falsa\n");
+            cout << "falsa" << endl;
         }
-
-        printf("\n");
     }
 
     return 0;
