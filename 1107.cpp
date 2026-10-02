@@ -16,7 +16,15 @@ int main()
         for (int i = 0; i < comprimento; i++)
         {
             cin >> dado;
-            valor.push_back(dado);
+
+            if (i == 0)
+            {
+                cont = dado;
+            }
+            else
+            {
+                if (dado)
+            }
         }
 
         int p;

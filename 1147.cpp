@@ -104,20 +104,6 @@ int analisacavalo(int **matriz, int linha, int coluna)
 
 void analisacasas(int **matriz, int linha, int coluna)
 {
-
-    if (linha + 1 <= 7)
-    {
-        if (coluna + 1 <= 7)
-        {
-            matriz[linha + 1][coluna + 1] = 2;
-        }
-
-        if (coluna - 1 >= 0)
-        {
-            matriz[linha + 1][coluna - 1] = 2;
-        }
-    }
-
     if (linha - 1 >= 0)
     {
         if (coluna + 1 <= 7)
