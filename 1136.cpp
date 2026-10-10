@@ -1,66 +1,59 @@
 #include <bits/stdc++.h>
-#define max 95
 using namespace std;
 
 int main()
 {
-    int n, b, valor;
     vector<int> vet;
-    int posicao[max];
+    set<int> aux;
+    int n, b;
+    int valor;
 
-    while (cin >> n && cin >> b && (n != 0 && b != 0))
+    while (cin >> n && cin >> b && (n != 0 || b != 0))
     {
-        for(int i = 0; i < max; i++)
-        {
-            posicao[i] = 0;
-        }
-        
-        
         for (int i = 0; i < b; i++)
         {
             cin >> valor;
             vet.push_back(valor);
         }
 
-        sort(vet.rbegin(), vet.rend());
+        int controle = 0;
+        int valor;
 
-        for(int i = 0; i < b; i++)
+        for (int i = 0; i < b; i++)
         {
-            for(int j = 0; j < b; j++)
+            for (int j = 0; j < b; j++)
             {
-                posicao[vet[j]] = 1;
-                
-                if(j > i)
+                valor = fabs(vet[i] - vet[j]);
+
+                if (valor <= n)
                 {
-                    posicao[vet[j] - vet[i]] = 1;
+                    aux.insert(valor);
                 }
-                else if(i > j)
+
+                if (aux.size() == n + 1)
                 {
-                    posicao[vet[i] - vet[j]] = 1;
+                    controle = 1;
+                    break;
                 }
             }
-        }
-        
-        int controle = 1;
-        
-        for(int i = 0; i <= n; i++)
-        {
-            if(posicao[i] == 0)
+
+            if (controle == 1)
             {
-                controle = 0;
                 break;
             }
         }
-        
-        if(controle == 1)
+
+        if (controle == 1)
         {
-            printf("Y\n");
+            cout << "Y" << endl;
         }
         else
         {
-            printf("N\n");
+            cout << "N" << endl;
         }
+
         vet.clear();
+        aux.clear();
     }
 
     return 0;

@@ -1,41 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 int main()
 {
     int n;
-    int valor;
-    int cont;
-    char c;
-
-    vector<int> vet;
-    vector<int> compara;
+    vector<string> principal;
+    vector<string> aux;
 
     while (cin >> n)
     {
-        cont = 0;
         cin.ignore();
+        int cont = 0;
+        principal.clear();
+        aux.clear();
 
         for (int i = 0; i < n; i++)
         {
-            while (cin.get(c) && c != '\n')
-            {
-                valor = c - '0';
-                vet.push_back(valor);
-            }
+            cin >> principal;
+            int tam = principal.size();
 
-            sort(vet.begin(), vet.end());
-
-            if (i > 0)
+            if (i != 0)
             {
-                for (int j = 0; j < compara.size(); j++)
+                for (int j = 0; j < tam; j++)
                 {
-                    if (j > vet.size())
-                    {
-                        break;
-                    }
-
-                    if (vet[j] == compara[j])
+                    if (aux[j] == principal[j])
                     {
                         cont++;
                     }
@@ -44,23 +31,26 @@ int main()
                         break;
                     }
                 }
-
-                compara.clear();
             }
 
-            for (int j = 0; j < vet.size(); j++)
+            aux.clear();
+
+            if (i != n - 1)
             {
-                compara.push_back(vet[j]);
+                sort(principal.begin(), principal.end());
+
+                for (int j = 0; j < tam; j++)
+                {
+                    aux.push_back(principal[j]);
+                }
+
+                principal.clear();
             }
-
-            sort(compara.begin(), compara.end());
-
-            vet.clear();
+            else
+            {
+                cout << cont << endl;
+            }
         }
-
-        cout << cont << endl;
-        compara.clear();
-        vet.clear();
     }
 
     return 0;
