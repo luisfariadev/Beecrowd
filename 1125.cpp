@@ -1,53 +1,71 @@
 #include <bits/stdc++.h>
+#define max 105
 using namespace std;
 
 int main()
 {
     int g;
+    int p;
     int posicao;
     int valor;
-    int p;
-    vector<int> vet;
+    vector<vector<int>> vet(105);
     vector<int> aux;
+    int quant;
 
     while (cin >> g && cin >> p && (g != 0 && p != 0))
     {
-        vet.push_back(-1);
-        aux.push_back(-1);
 
-        for (int i = 0; i < p; i++)
+        for (int i = 0; i < g; i++)
         {
-            cin >> posicao;
-            vet.push_back(posicao);
+            vet[i].push_back(-1);
+
+            for (int j = 1; j <= p; j++)
+            {
+                cin >> posicao;
+                vet[i].push_back(posicao);
+            }
         }
 
-        int quant;
         cin >> quant;
+        int q;
         int maior = 0;
-        int z;
 
-        for (int i = 1; i <= quant; i++)
+        for (int i = 0; i < quant; i++)
         {
-            cin >> valor;
-            aux.push_back(valor);
+            cin >> q;
+            int maior = 0;
+            aux.push_back(-1);
 
-            if (valor > maior)
+            for (int j = 1; j <= q; j++)
             {
-                maior = valor;
-                posicao = i;
-            }
-        }
+                cin >> valor;
+                aux.push_back(valor);
 
-        for (int i = 1; i <= quant; i++)
-        {
-            if (aux[i] == maior)
+                if (valor > maior)
+                {
+                    maior = valor;
+                }
+            }
+
+            int cont = 0;
+
+            for (int j = 1; j < aux.size(); j++)
             {
-                cout << vet[i] << " ";
-            }
-        }
+                if (aux[j] == maior)
+                {
+                    if (cont != 0)
+                    {
+                        cout << " ";
+                    }
 
-        vet.clear();
-        aux.clear();
+                    cout << vet[i][j];
+                    cont++;
+                }
+            }
+
+            cout << endl;
+            aux.clear();
+        }
     }
 
     return 0;

@@ -1,56 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 int main()
 {
-    int n;
+    string lista;
     vector<string> principal;
-    vector<string> aux;
+    int n;
 
     while (cin >> n)
     {
         cin.ignore();
         int cont = 0;
-        principal.clear();
-        aux.clear();
 
         for (int i = 0; i < n; i++)
         {
-            cin >> principal;
-            int tam = principal.size();
+            cin >> lista;
+            principal.push_back(lista);
+        }
 
-            if (i != 0)
+        sort(principal.begin(), principal.end());
+
+        int tam = principal[0].size();
+
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < tam; j++)
             {
-                for (int j = 0; j < tam; j++)
+                if (principal[i][j] == principal[i + 1][j])
                 {
-                    if (aux[j] == principal[j])
-                    {
-                        cont++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    cont++;
                 }
-            }
-
-            aux.clear();
-
-            if (i != n - 1)
-            {
-                sort(principal.begin(), principal.end());
-
-                for (int j = 0; j < tam; j++)
+                else
                 {
-                    aux.push_back(principal[j]);
+                    break;
                 }
-
-                principal.clear();
-            }
-            else
-            {
-                cout << cont << endl;
             }
         }
+
+        cout << cont << endl;
+        principal.clear();
     }
 
     return 0;
