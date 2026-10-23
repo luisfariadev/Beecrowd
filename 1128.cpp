@@ -1,108 +1,92 @@
 #include <bits/stdc++.h>
-#define max 2005
+#define max_elem 2005
 using namespace std;
+
+void zera(int u, int visitado[])
+{
+    for (int i = 0; i < u; i++)
+    {
+        visitado[i] = 0;
+    }
+}
+
+void DFS(vector<int> vet[], int visitado[], int u)
+{
+    if (!visitado[u])
+    {
+        visitado[u] = 1;
+
+        for (auto i : vet[u])
+        {
+            DFS(vet, visitado, i);
+        }
+    }
+}
+
+int confere(int n, int visitado[])
+{
+    for (int i = 1; i <= n; i++)
+    {
+        if (!visitado[i])
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
 
 int main()
 {
-    map<int, pair<int, int>> mapa;
+    vector<int> direto[max_elem];
+    vector<int> invertido[max_elem];
     int n;
     int m;
     int v;
     int w;
-    int p;
+    int caso;
 
-    while (cin >> n && cin >> m && (n != 0 && m != 0))
+    while (cin >> n >> m && (n != 0 || m != 0))
     {
-        int cont = 0;
-
         for (int i = 0; i < m; i++)
         {
             cin >> v;
             cin >> w;
-            cin >> p;
+            cin >> caso;
 
-            if (p == 1)
+            direto[v].push_back(w);
+            invertido[w].push_back(v);
+
+            if (caso == 2)
             {
-                mapa.insert({v, {w, 1}});
-                cont++;
-            }
-            else
-            {
-                mapa.insert({v, {w, 2}});
+                direto[w].push_back(v);
+                invertido[v].push_back(w);
             }
         }
 
-        int tam = mapa.size();
+        int visita[max_elem];
 
-        for (int i = 0; i < tam; i++)
+        zera(n + 1, visita);
+        DFS(direto, visita, 1);
+        int A = confere(n, visita);
+
+        zera(n + 1, visita);
+        DFS(invertido, visita, 1);
+        int B = confere(n, visita);
+
+        if (A && B)
         {
-            int controle = 1;
+            cout << "1" << endl;
+        }
+        else
+        {
+            cout << "0" << endl;
+        }
 
-            if (mapa[i].second == 1)
-            {
-                int posicao = mapa[i].second;
-                int valor = mapa[i].first;
-                int contador = 0;
-
-                while (1)
-                {
-                    auto it = mapa.find(posicao);
-
-                    if (it == mapa.end())
-                    {
-                        controle = 0;
-                        break;
-                    }
-
-                    if (it->second.second == 2)
-                    {
-                        if (it->second.first == valor)
-                        {
-                            controle = 1;
-                        }
-                        else
-                        {
-                            controle = 0;
-                        }
-
-                        break;
-                    }
-                    else
-                    {
-                        if (it->second.first == valor)
-                        {
-                            controle = 1;
-                            break;
-                        }
-                        else if (contador == cont && it->second.second == 1)
-                        {
-                            controle = 0;
-                            break;
-                        }
-                        else
-                        {
-                            posicao = it->second.second;
-                            contador++;
-                        }
-                    }
-                }
-
-                if (controle == 0)
-                {
-                    break;
-                }
-            }
-
-            if (controle == 0)
-            {
-                cout << "0" << endl;
-            }
-            else
-            {
-                cout << "1" << endl;
-            }
-
-            mapa.clear();
+        for (int i = 0; i <= n; i++)
+        {
+            direto[i].clear();
+            invertido[i].clear();
         }
     }
 
