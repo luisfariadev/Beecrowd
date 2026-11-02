@@ -3,87 +3,63 @@ using namespace std;
 
 typedef struct
 {
-    string cond;
     string nome;
+    string condicao;
 
 } Pessoa;
 
-bool compara(Pessoa a, Pessoa b)
+bool ordena(Pessoa a, Pessoa b)
 {
-    if (a.cond == "YES")
+    if (a.condicao != b.condicao)
     {
-        if (b.cond == "NO")
-        {
-            return true;
-        }
-        else
-        {
-            if (a.nome < b.nome)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        return a.condicao == "YES";
     }
-    else
-    {
-        if (b.cond == "NO")
-        {
-            return false;
-        }
-        else
-        {
-            if (a.nome < b.nome)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+
+    return a.nome < b.nome;
 }
 
 int main()
 {
-    multimap<string, string> map;
-    vector<Pessoa> vet;
+    map<string, string> mapa;
     string nome;
     string cond;
+
+    int p = 0;
+    int tamanho = 0;
+    string menor_Nome;
 
     while (cin >> nome && nome != "FIM")
     {
         cin >> cond;
-        map.insert({nome, cond});
+
+        if (cond == "YES" && nome.size() > tamanho)
+        {
+            tamanho = nome.size();
+            menor_Nome = nome;
+        }
+
+        mapa.insert({nome, cond});
     }
 
-    while (!map.empty())
+    Pessoa pessoa[mapa.size()];
+
+    for (auto it = mapa.begin(); it != mapa.end(); it++)
     {
-        auto it = map.begin();
-
-        Pessoa novapessoa;
-        novapessoa.nome = it->first;
-        novapessoa.cond = it->second;
-
-        vet.push_back(novapessoa);
-        map.erase(it);
+        pessoa[p].nome = it->first;
+        pessoa[p].condicao = it->second;
+        p++;
     }
 
-    sort(vet.begin(), vet.end(), compara);
-    int tam = vet.size();
+    sort(pessoa, pessoa + p, ordena);
 
-    for (int i = 1; i < tam; i++)
+    for (int i = 0; i < p; i++)
     {
-        cout << vet[i].nome << endl;
+        cout << pessoa[i].nome << endl;
     }
 
     cout << endl;
     cout << "Amigo do Habay:" << endl;
-    cout << vet[0].nome << endl;
+    cout << menor_Nome << endl;
 
     return 0;
 }
